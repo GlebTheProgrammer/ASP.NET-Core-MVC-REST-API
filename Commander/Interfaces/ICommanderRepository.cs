@@ -9,6 +9,11 @@ namespace Commander.Interfaces
     public interface ICommanderRepository
     {
         IEnumerable<Command> GetAllCommands();
+
         Command GetCommandById(int id);
+
+        void CreateCommand(Command cmd);
+
+        bool SaveChanges();
     }
 }
