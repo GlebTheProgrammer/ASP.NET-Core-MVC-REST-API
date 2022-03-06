@@ -8,7 +8,9 @@ namespace Commander.Mappers
     {
         public CommandsMapper()
         {
+            // Source -> Target
             CreateMap<Command, CommandReadDto>();
+            CreateMap<CommandCreateDto, Command>();
         }
     }
 }
