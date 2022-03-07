@@ -3,6 +3,7 @@ using Commander.domain;
 using Commander.DTOs;
 using Commander.Interfaces;
 using Commander.Models;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,33 @@ namespace Commander.Controllers
             // This mapper has already updated model from DB with our new commandUpdateDto
             // Source -> Target
             mapper.Map(commandUpdateDto, commandModelFromRepository);
+            repository.UpdateCommand(commandModelFromRepository);
+
+            repository.SaveChanges();
+
+            return NoContent();
+        }
+
+        //PATCH api/commands/{id}
+        [HttpPatch("{id}")]
+        public ActionResult PartialCommandUpdate(int id, JsonPatchDocument<CommandUpdateDto> patchDocument)
+        {
+            var commandModelFromRepository = repository.GetCommandById(id);
+            if (commandModelFromRepository == null)
+            {
+                return NotFound();
+            }
+
+            var commantToPatch = mapper.Map<CommandUpdateDto>(commandModelFromRepository);
+            patchDocument.ApplyTo(commantToPatch, ModelState);
+
+            if (!TryValidateModel(commantToPatch))
+            {
+                return ValidationProblem(ModelState);
+            }
+
+            // Source -> Target
+            mapper.Map(commantToPatch, commandModelFromRepository);
             repository.UpdateCommand(commandModelFromRepository);
 
             repository.SaveChanges();
