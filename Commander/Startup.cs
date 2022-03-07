@@ -30,9 +30,6 @@ namespace Commander
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer
-            (Configuration.GetConnectionString("CommanderConnection")));
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -41,8 +38,13 @@ namespace Commander
 
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            // From -> Into (dependency injection)
+
             //services.AddScoped<ICommanderRepository, CommanderRepository>();
             services.AddScoped<ICommanderRepository, SqlCommanderRepository>();
+
+            services.AddDbContext<MyDbContext>(opt => opt.UseSqlServer
+            (Configuration.GetConnectionString("CommanderConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
