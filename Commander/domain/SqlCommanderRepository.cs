@@ -39,5 +39,10 @@ namespace Commander.domain
         {
             return (context.SaveChanges() >= 0);
         }
+
+        public void UpdateCommand(Command cmd)
+        {
+            //Nothing
+        }
     }
 }
