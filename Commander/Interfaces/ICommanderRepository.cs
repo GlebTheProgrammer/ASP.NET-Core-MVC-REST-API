@@ -16,6 +16,8 @@ namespace Commander.Interfaces
 
         void UpdateCommand(Command cmd);
 
+        void DeleteCommand(Command cmd);
+
         bool SaveChanges();
     }
 }
