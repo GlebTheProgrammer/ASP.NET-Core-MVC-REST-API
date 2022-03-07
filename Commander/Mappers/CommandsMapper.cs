@@ -11,6 +11,7 @@ namespace Commander.Mappers
             // Source -> Target
             CreateMap<Command, CommandReadDto>();
             CreateMap<CommandCreateDto, Command>();
+            CreateMap<CommandUpdateDto, Command>();
         }
     }
 }
