@@ -3,6 +3,7 @@ using Commander.domain;
 using Commander.DTOs;
 using Commander.Interfaces;
 using Commander.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -12,6 +13,8 @@ using System.Threading.Tasks;
 
 namespace Commander.Controllers
 {
+    [Authorize]
+    [ApiVersion("1.0")]
     [Route("api/commands")]
     [ApiController]
     public class CommandsController : ControllerBase
